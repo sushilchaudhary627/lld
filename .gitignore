@@ -1,0 +1,54 @@
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Exclude build outputs (for Java projects)
+out/
+target/
+bin/
+build/
+
+# Gradle specific files
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle-cache/
+build/
+
+# Maven specific files
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+
+# Ignore all log files
+*.log
+
+# Ignore class and compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Node.js dependencies (if applicable)
+node_modules/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python Virtual Environment (if applicable)
+venv/
+__pycache__/
+
+# Ignore JetBrains IDE shared settings (optional)
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+
+# Ignore user-specific run configurations
+.idea/runConfigurations/
+
