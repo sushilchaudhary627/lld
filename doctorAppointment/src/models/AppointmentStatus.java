@@ -1,0 +1,5 @@
+package models;
+
+public enum AppointmentStatus {
+    CONFIRMED, CANCELLED_BY_DOCTOR, CANCELLED_BY_PATIENT, COMPLETED, WAIIING, WAITING, IN_QUEUE, CREATED
+}

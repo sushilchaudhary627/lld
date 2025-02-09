@@ -49,3 +49,13 @@ and userStockown enity created
 
 whenever a user wants sell stock then order entity created
 and once someone else placed the order then transaction pending to complete with price
+
+
+In present design
+Assumption buyer matched with system stock price below or equal;
+And one buyer is mapped to one seller only
+but Problems could be arises as no stock can be sold
+
+Next step
+- better handling for connecting buyer and seller optimally
+
