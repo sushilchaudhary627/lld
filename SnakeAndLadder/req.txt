@@ -1,0 +1,17 @@
+Here is my implementation for Simulating Snake and Ladder game.
+
+1- Multi Player game. Played on a grid of size 100. Each cell will have a number.
+2 -Some off the cell will have ladder which will jump to higher number.
+3 -Some cell will have a snake which will take you down to tail number.
+4- Player will in turn roll a die(1-6). Based on the value user will advance.
+
+
+
+Entity
+Board
+Cell
+Ladder
+Snake
+Player
+Dice
+Game
