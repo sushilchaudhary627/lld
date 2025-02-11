@@ -74,7 +74,7 @@ public class GameService {
         if (game.isGameComplete()) {
             throw new IllegalArgumentException("Game is over.");
         }
-        
+
         if (!game.isPlayersTurn(player)) {
             throw new IllegalArgumentException("It's not player " + playerId + "'s turn.");
         }
