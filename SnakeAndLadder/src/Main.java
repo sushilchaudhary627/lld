@@ -25,7 +25,7 @@ public class Main {
         PlayerService playerService = new PlayerService(playerRepository, new AtomicInteger(1));
         BoardService boardService = new BoardService(boardRepository, new AtomicInteger(1));
         GameService gameService = new GameService(gameRepository, new Dice(), playerService, boardService);
-        Board board = boardService.createBoard(Map.of(10, 11, 55, 20), Map.of(2, 19, 30, 99));
+        Board board = boardService.createBoard(Map.of(10, 6, 55, 20), Map.of(2, 19, 30, 99));
         System.out.println(board);
         Game game = gameService.startGame(board.getBoardId());
         System.out.println(game);
@@ -38,6 +38,14 @@ public class Main {
         while(game.getWinner() == null) {
             try {
                 gameService.takeTurn(p1.getPlayerId(), game.getGameId());
+                System.out.println(game);
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            try {
+                gameService.takeTurn(p2.getPlayerId(), game.getGameId());
                 System.out.println(game);
             }
             catch(Exception e){

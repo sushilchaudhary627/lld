@@ -1,8 +1,14 @@
 package services;
 
-import models.*;
+import models.Board;
+import models.Cell;
+import models.Game;
+import models.Player;
+import models.PlayerPosition;
+import models.Dice;
 import repository.GameRepository;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameService {
@@ -45,6 +51,10 @@ public class GameService {
         Player player = playerService.getPlayer(playerId);
         PlayerPosition playerPosition = createInitialPlayerPosition(game, player);
         game.addPlayerPosition(playerPosition);
+        // If this is the first player, set them as the starting player.
+        if (game.getPlayerPositions().size() == 1) {
+            game.setNextPlayer(player);
+        }
         gameRepository.update(game);
         return game;
     }
@@ -65,14 +75,20 @@ public class GameService {
             throw new IllegalArgumentException("Game is over.");
         }
 
+        if (!game.isPlayersTurn(player)) {
+            throw new IllegalArgumentException("It's not player " + playerId + "'s turn.");
+        }
         PlayerPosition playerPosition = game.getPlayerPosition(player);
         int rollValue = dice.roll();
         Cell currentCell = playerPosition.getCell();
         Cell nextCell = determineNextCell(game.getBoard(), currentCell, rollValue);
-
         playerPosition.setCell(nextCell);
         if (boardService.isWinningPosition(nextCell)) {
             game.setWinner(player);
+            game.setNextPlayer(null);
+        } else {
+            // Advance the turn in a round-robin fashion.
+            game.setNextPlayer(getNextPlayer(game, playerPosition));
         }
 
         gameRepository.update(game);
@@ -96,15 +112,32 @@ public class GameService {
     /**
      * Determines the next cell based on the current cell and the dice roll.
      *
-     * @param board      the board for the game.
+     * @param board       the board for the game.
      * @param currentCell the current cell of the player.
-     * @param rollValue  the value obtained from the dice roll.
+     * @param rollValue   the value obtained from the dice roll.
      * @return the next Cell.
      */
     private Cell determineNextCell(Board board, Cell currentCell, int rollValue) {
-        int nextPosition = currentCell.getNextPosition(rollValue);  // Ensure nextPosition() is defined with a lowercase 'n'
+        int nextPosition = currentCell.getNextPosition(rollValue);
         return board.findCellByPosition(nextPosition)
                 .orElseThrow(() -> new RuntimeException(
                         "Move not allowed from position " + currentCell.getPosition() + " with roll " + rollValue));
+    }
+
+    /**
+     * Calculates the next player's turn in a round-robin fashion.
+     *
+     * @param game                  the current game.
+     * @param currentPlayerPosition the position of the player who just took a turn.
+     * @return the next Player who should take a turn.
+     */
+    public Player getNextPlayer(Game game, PlayerPosition currentPlayerPosition) {
+        List<PlayerPosition> playerPositions = game.getPlayerPositions();
+        int currentIndex = playerPositions.indexOf(currentPlayerPosition);
+        if (currentIndex == -1) {
+            throw new IllegalArgumentException("Current player position not found in game.");
+        }
+        int nextIndex = (currentIndex + 1) % playerPositions.size();
+        return playerPositions.get(nextIndex).getPlayer();
     }
 }

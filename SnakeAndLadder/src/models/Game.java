@@ -17,6 +17,19 @@ public class Game {
     }
 
     List<PlayerPosition> playerPositions;
+
+    public Player getNextPlayer() {
+        if(nextPlayer == null) {
+            nextPlayer = playerPositions.getFirst().getPlayer();
+        }
+        return nextPlayer ;
+    }
+
+    public void setNextPlayer(Player nextPlayer) {
+        this.nextPlayer = nextPlayer;
+    }
+
+    Player nextPlayer;
     Board board;
     Player winner;
     Integer gameId;
@@ -69,5 +82,9 @@ public class Game {
 
     public Boolean isGameComplete(){
         return !Objects.isNull(winner);
+    }
+
+    public boolean isPlayersTurn(Player player) {
+        return player.equals(getNextPlayer());
     }
 }
