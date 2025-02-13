@@ -31,7 +31,33 @@ public class Main {
         System.out.println(aircraft);
         Flight flight = flightScheduleService.createFlight(aircraft.getAircraftName(), LocalDateTime.now(), 10, new City(), new City(), 100.00);
         System.out.println(flight);
-        Booking booking = reservationService.createReservation(admin.getUserId(), flight.getFlightId(), List.of(1));
-        System.out.println(booking);
+        Runnable bookingTask = () -> {
+            try {
+                Booking booking = reservationService.createReservation(
+                        admin.getUserId(),
+                        flight.getFlightId(),
+                        List.of(1)   // Booking seat with id 1
+                );
+                System.out.println(Thread.currentThread().getName() + " Booking successful: " + booking);
+            } catch (Exception e) {
+                System.out.println(Thread.currentThread().getName() + " Booking failed: " + e.getMessage());
+            }
+        };
+
+        Thread thread1 = new Thread(bookingTask, "Thread-1");
+        Thread thread2 = new Thread(bookingTask, "Thread-2");
+
+        // Start both threads.
+        thread1.start();
+        thread2.start();
+
+        // Wait for both threads to complete.
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }
