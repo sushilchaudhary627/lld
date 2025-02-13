@@ -32,7 +32,7 @@ public class ReservationService {
                 selectedSeats.add(flightSeat);
             }
         }
-        flightSeatService.checkAvailabilityAndMarkUnAvailable(selectedSeats);
+        flightSeatService.checkAvailabilityAndMarkUnavailable(selectedSeats);
         try {
             Booking booking = new Booking(bookingIdGenerator.getAndIncrement());
             booking.setFlight(flight);
@@ -44,7 +44,7 @@ public class ReservationService {
             bookingRepository.save(booking);
             return booking;
         } catch(Exception e){
-            flightSeatService.MarkAvailable(selectedSeats);
+            flightSeatService.markAvailable(selectedSeats);
             throw new RuntimeException(e.getMessage());
         }
     }
