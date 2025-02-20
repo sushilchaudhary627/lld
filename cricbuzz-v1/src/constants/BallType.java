@@ -8,7 +8,7 @@ public enum BallType {
     TWO("two", 2),
     ONE("one", 1),
     WICKET("wicket",-1 ),
-    WIDE("wide", 1);
+    WIDE("wide", 0), NO_BALL("no ball", 1 );
 
     String  type;
     Integer score;
@@ -24,5 +24,9 @@ public enum BallType {
 
     public Integer getScore() {
         return Math.max(score, 0);
+    }
+
+    public boolean isExtra() {
+        return this == BallType.WIDE || this == BallType.NO_BALL;
     }
 }
