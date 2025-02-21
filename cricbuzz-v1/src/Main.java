@@ -55,6 +55,7 @@ public class Main {
         teamService.updateMatchScore(1, 2, BallType.SIX);
 
         System.out.println("Scorecard after Over 2:");
+        // here we could calculate after every ball
         System.out.println(scoreService.getScoreForOver(team));
 
     }

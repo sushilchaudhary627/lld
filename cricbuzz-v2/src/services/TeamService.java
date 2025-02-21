@@ -60,13 +60,21 @@ public class TeamService {
         System.out.println(ballType);
         if(ballType == BallType.WICKET){
             if(team.getBattingOrder().isEmpty()){
-                throw new RuntimeException("All out...");
+                System.out.println("\"All out...\")");
+                return;
             }
             Player player = team.getBattingOrder().poll();
             System.out.println(team.getStriker() + " replaced to new striker " + player);
             team.setStriker(player);
         }else{
-            if(ballType.getScore()%2 == 1 || currentOverCompleted(team.getMatchOverList().getLast())){
+            if(ballType.getScore()%2 == 1){
+                Player currentStriker = team.getStriker();
+                team.setStriker(team.getNonStriker());
+                team.setNonStriker(currentStriker);
+                System.out.println("Strikers swapped: Now striker -> " + team.getStriker() + ", non-striker -> " + team.getNonStriker());
+            }
+
+            if(currentOverCompleted(team.getMatchOverList().getLast())){
                 Player currentStriker = team.getStriker();
                 team.setStriker(team.getNonStriker());
                 team.setNonStriker(currentStriker);

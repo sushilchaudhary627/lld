@@ -6,12 +6,13 @@ public enum BallType {
     FOUR("four", 4),
     THREE("three", 3),
     TWO("two", 2),
-    ONE("one",1),
+    ONE("one", 1),
     WIDE("wide", 0),
     NO_BALL("no ball", 0),
     WICKET("wicket", 0);
-    Integer score;
-    String type;
+
+    private final Integer score; // Made final
+    private final String type;   // Made final
 
     BallType(String type, Integer score) {
         this.type = type;
@@ -25,7 +26,8 @@ public enum BallType {
     public Integer getScore() {
         return score;
     }
-    public static Boolean isExtraRun(BallType ballType){
-        return ballType == BallType.NO_BALL || ballType == BallType.WIDE;
+
+    public static boolean isExtraRun(BallType ballType) {  // Changed Boolean -> boolean
+        return ballType == NO_BALL || ballType == WIDE;
     }
 }
