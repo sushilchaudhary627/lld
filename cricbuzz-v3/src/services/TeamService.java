@@ -53,6 +53,7 @@ public class TeamService {
         if(ballType == BallType.WICKET){
             if(team.getBattingOrder().isEmpty()){
                 System.out.printf("All player of team: %s are out.\n", team.getName());
+                team.setStriker(null);
             }else{
                 team.setStriker(team.getBattingOrder().poll());
             }

@@ -9,6 +9,7 @@ import models.Team;
 import repo.MatchRepo;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MatchService {
@@ -78,7 +79,8 @@ public class MatchService {
     }
 
     private boolean checkBattingCompleted(Team team, Integer totalOver) {
-        if (team.getBattingOrder().isEmpty()) {
+        if (Objects.isNull(team.getStriker())) {
+            // all out ?
             return true;
         }
         return team.getMatchOverList().size() == totalOver && team.getMatchOverList().getLast().getBalls().size() == 6;
