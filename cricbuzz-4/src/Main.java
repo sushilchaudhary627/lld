@@ -53,4 +53,5 @@ public class Main {
 // started writing code at 3:12PM
 // models writing at 3:13 and completed 3:27PM
 // started writing repo  3:27 -and completed impl 3:41
-// took 2 hour 15 min 
+// took 2 hour 15 min
+// to create a winner - you should winner declaration strategy class
